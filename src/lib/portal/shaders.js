@@ -1,5 +1,7 @@
-// ORIGINAL Claude prototype shader, extracted verbatim from Liquid Glass Portal(2).html.
-// Keep unchanged until the visual comparison with the working HTML is complete.
+// Claude prototype shader with a small, isolated idle-motion addition.
+// The original tunnel algorithm is preserved. The new movement only affects
+// the visible outer capsule while p is near zero; no 3D mesh is introduced.
+// Restore the original from prototypes/liquid-glass-original.html if needed.
 export const vertexShader = `varying vec2 v;void main(){v=uv;gl_Position=vec4(position.xy,0.,1.);}`;
 export const fragmentShader = `precision highp float;varying vec2 v;uniform sampler2D t1,t2;uniform float asp,p,time,a1,a2;
 const vec2 C=vec2(.494,.498);
@@ -43,6 +45,19 @@ void main(){
  float len=length(q0);
  float Z=exp(ee*log(14.));
  vec2 qp=rot(q0,ee*ee*2.4*exp(-len*2.2));
+ // Subtle living-liquid distortion of the OUTER capsule, even at p=0.
+ // It fades out before the original tunnel takes over (p >= .22).
+ float idle=1.-smoothstep(.015,.22,p);
+ float radius=max(length(qp),.0001);
+ float angle=atan(qp.y,qp.x);
+ float swirl=idle*(.016*sin(time*.42+radius*9.)+.006*sin(5.*angle-time*.23));
+ qp=rot(qp,swirl);
+ vec2 outward=qp/radius;
+ vec2 tangent=vec2(-outward.y,outward.x);
+ float surfaceFlow=sin(angle*5.+radius*13.-time*.58);
+ float surfaceBreath=sin(angle*3.-radius*15.+time*.43);
+ qp+=idle*(tangent*.007*surfaceFlow+outward*.009*surfaceBreath);
+ qp*=1.+idle*.010*sin(time*.54);
  float bl=pk*.12+ee*.04,ca=pk*.03;
  vec3 pt=vec3(0.);
  for(int i=0;i<6;i++){float k=float(i)/5.;float zz=Z*(1.+bl*k);
