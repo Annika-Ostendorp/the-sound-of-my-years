@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vite/
+.DS_Store
+.env
+.env.*
+!.env.example
+private/
+data/raw/
+raw-data/
+spotify-exports/
+*.zip
+*.xlsx
+*.xls
+*.csv
+*.jsonl
+*.log
