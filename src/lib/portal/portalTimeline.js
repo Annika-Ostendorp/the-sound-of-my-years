@@ -10,14 +10,26 @@ export const PORTAL_TIMING = Object.freeze({
   hero: { start: 0.0, end: 0.238, fadeIn: 0.001, fadeOut: 0.074 },
   navigationEnd: 0.205,
   plunge: { start: 0.238, end: 0.247 },
-  // Timing positions still refer to the ORIGINAL 420vh main-journey scroll travel.
-  // The extra 200vh hold comes AFTER it, so existing MEMORY_CUES do not shift.
+  // The original 420vh journey is preserved: your MEMORY_CUES stay identical.
+  // Pass 03: a shorter 70vh finale instead of 200vh. No drawn-out scroll pause.
   mainTravelVh: 420,
-  holdTravelVh: 200,
-  arrival: { start: 0.902, full: 0.952 },
-  darken: { start: 0.872, end: 0.951 },
-  handoff: { start: 0.64, end: 1.0 },
-  arrivalExit: { start: 0.85, end: 0.99 },
+  holdTravelVh: 70,
+  arrival: { start: 0.902, full: 0.954 },
+  darken: { start: 0.886, end: 0.951 },
+  // Hold the fully revealed chapter briefly, then flow into the real data world.
+  handoff: { start: 0.54, end: 0.95 },
+  arrivalExit: { start: 0.40, end: 0.85 },
+});
+
+/**
+ * Capsule idle motion is intentionally extremely subtle in Pass 03.
+ * strength: 0 disables the new idle effect; 0.12-0.22 is very restrained.
+ * speed:   1 is the original tempo, 0.5 is half as fast.
+ * The tunnel's own continuous movement stays unchanged.
+ */
+export const PORTAL_IDLE = Object.freeze({
+  strength: 0.32,
+  speed: 1,
 });
 
 export const MEMORY_CUES = Object.freeze([
