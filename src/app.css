@@ -2,6 +2,9 @@
 
 :root {
   font-family: 'DM Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family: 'Syne', sans-serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
   color: #f5ebf9;
   background-color: #05020a;
   font-synthesis: none;
@@ -25,3 +28,31 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--peach); outline
 .site-footer { min-height: 130px; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; align-items:center; padding:2rem 6vw; color:#a48eae; font-size:.7rem; letter-spacing:.14em; border-top:1px solid #392744; }
 .site-footer a { text-decoration:none; color:#f1c7d8; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+#rhythm,
+#about {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+}
+
+.memory-quote {
+  font-family: var(--font-editorial);
+}
+
+.data-label {
+  font-family: var(--font-body);
+}

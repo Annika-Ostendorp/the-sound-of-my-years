@@ -7,7 +7,9 @@
  */
 
 export const PORTAL_TIMING = Object.freeze({
-  hero: { start: 0.0, end: 0.238, fadeIn: 0.001, fadeOut: 0.074 },
+  // Editorial title fades almost immediately (first ~5.5% of the main scroll journey).
+  // The tunnel, four memory cues and World-01 reveal timings are unchanged.
+  hero: { start: 0.0, end: 0.055, fadeIn: 0.001, fadeOut: 0.049 },
   navigationEnd: 0.205,
   plunge: { start: 0.238, end: 0.247 },
   // The original 420vh journey is preserved: your MEMORY_CUES stay identical.
@@ -28,8 +30,8 @@ export const PORTAL_TIMING = Object.freeze({
  * The tunnel's own continuous movement stays unchanged.
  */
 export const PORTAL_IDLE = Object.freeze({
-  strength: 0.32,
-  speed: 1,
+  strength: 0.20,
+  speed: 0.90,
 });
 
 export const MEMORY_CUES = Object.freeze([

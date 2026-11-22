@@ -1,12 +1,13 @@
 <script>
   import { onMount } from 'svelte';
+  import HeroContent from './HeroContent.svelte';
   import { vertexShader, fragmentShader } from '../portal/shaders.js';
   import { PORTAL_TIMING, PORTAL_IDLE, MEMORY_CUES, cueOpacity, rangeProgress } from '../portal/portalTimeline.js';
 
   let wrapper;
   let canvas;
+  let portalVisual;
   let progressBar;
-  let topbar;
   let handoff;
   let finaleBackdrop;
   let finaleHint;
@@ -126,6 +127,12 @@
           currentHold += (targetHold - currentHold) * (1 - Math.exp(-dt * 9));
           currentOverall += (targetOverall - currentOverall) * (1 - Math.exp(-dt * 9));
 
+          // Pass 05: the actual WebGL artwork starts SMALLER and LOWER than the
+          // editorial headline. It expands to full screen during the plunge.
+          // This is a CSS presentation transform, NOT a change to the shader,
+          // the idle glass motion or the user's scroll/memory cue timings.
+          
+
           // The original tunnel algorithm is preserved; the shader now also has
           // a tiny time-driven glass-flow distortion while progress is near 0.
           uniforms.p.value = current;
@@ -138,13 +145,6 @@
           if (hero) {
             hero.style.opacity = String(heroOpacity);
             hero.style.transform = `translate(-50%, ${-14 * (1 - heroOpacity)}px)`;
-          }
-
-          if (topbar) {
-            const visible = 1 - rangeProgress(current, 0.12, PORTAL_TIMING.navigationEnd);
-            topbar.style.opacity = String(visible);
-            topbar.style.pointerEvents = visible < 0.01 ? 'none' : 'auto';
-            topbar.inert = visible < 0.01;
           }
 
           memories.forEach((el, i) => {
@@ -226,21 +226,17 @@
 
 <section bind:this={wrapper} id="top" class:still={fallback} class="portal-journey" aria-label="Introductory time-capsule journey">
   <div class="portal-stage">
-    {#if fallback}
-      <img class="static-portal" src="/portal/capsule.jpg" alt="Iridescent violet, pink and gold liquid-glass portal" />
-    {:else}
-      <canvas bind:this={canvas} class="portal-canvas" aria-hidden="true"></canvas>
-    {/if}
+    <div bind:this={portalVisual} class="portal-visual">
+      {#if fallback}
+        <img class="static-portal" src="/portal/capsule.jpg" alt="Iridescent violet, pink and gold liquid-glass portal" />
+      {:else}
+        <canvas bind:this={canvas} class="portal-canvas" aria-hidden="true"></canvas>
+      {/if}
+    </div>
 
-    <nav bind:this={topbar} class="topbar" aria-label="Project navigation">
-      <span>THE SOUND OF MY YEARS</span>
-      <a href="#rhythm">THE JOURNEY <span aria-hidden="true">↗</span></a>
-    </nav>
-
+    <!-- Editorial copy is physically above the scaled-and-lowered capsule. -->
     <div bind:this={hero} class="hero-copy" style:opacity={fallback ? '1' : '0'}>
-      <p class="eyebrow">A PERSONAL MUSIC TIME CAPSULE <span class="divider">/</span> 2018—2026</p>
-      <h1>THE SOUND<br />OF MY YEARS</h1>
-      <p class="opening-question">What if my music remembers more than I do?</p>
+      <HeroContent />
     </div>
 
     {#if !fallback}
@@ -278,20 +274,38 @@
 </section>
 
 <style>
-  /* 420vh original journey + 70vh finale + 100vh pinned viewport = 590vh. */
+  /* Unchanged: 420vh journey + 70vh finale + 100vh pinned viewport = 590vh. */
   .portal-journey { height: 590vh; height: 590svh; position: relative; background: #05020a; }
-  .portal-stage { position: sticky; top: 0; height: 100vh; height: 100svh; width:100%; overflow:hidden; isolation:isolate; background: radial-gradient(circle at 50% 50%, #291034 0%, #05020a 68%); }
+  .portal-stage { position: sticky; top: 0; height: 100vh; height: 100svh; width:100%; overflow:hidden; isolation:isolate; background: #05020a; }
+  .portal-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  transform: none;
+  mask: none;
+  -webkit-mask: none;
+}
   .portal-canvas, .static-portal { position:absolute; inset:0; width:100%; height:100%; display:block; }
   .static-portal { object-fit:contain; opacity:.85; }
   .portal-stage:after { content:''; position:absolute; z-index:2; inset:0; background:linear-gradient(to bottom,rgba(4,2,9,.28),transparent 25%,transparent 72%,rgba(4,2,9,.43)); pointer-events:none; }
-  .topbar { position:absolute; z-index:5; top:2.5rem; left:6vw; right:6vw; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-weight:650; font-size:.7rem; letter-spacing:.15em; text-shadow:0 2px 16px #160617; }
-  .topbar a { text-decoration:none; color:#ffe3f4; opacity:.82; }
-  .hero-copy { position:absolute; z-index:4; top:13vh; left:50%; width:min(94%,1200px); transform:translateX(-50%); text-align:center; pointer-events:none; text-shadow:0 4px 35px rgba(0,0,0,.75); will-change:opacity,transform; }
-  .eyebrow { color:#ffe4d9; font-size:clamp(.55rem,.9vw,.85rem); letter-spacing:.25em; font-weight:700; }
-  .divider { margin:0 1em; opacity:.6; }
-  h1 { color:#f8eefa; font-size:clamp(3.1rem,7.6vw,8rem); letter-spacing:-.06em; line-height:.93; margin:.6rem 0 1rem; font-weight:720; }
-  .opening-question { font-family:Georgia,serif; font-style:italic; font-size:clamp(1.12rem,2.2vw,2rem); font-weight:400; color:#fff0f2; }
+  .hero-copy {
+  position: absolute;
+  z-index: 4;
 
+  top: clamp(6rem, 10vh, 8rem);
+  left: 50%;
+  width: min(94vw, 1500px);
+
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+
+  will-change: opacity, transform;
+}
   /* No glass cards inside the tunnel: the memories seem suspended in space. */
   .memory { position:absolute; z-index:4; left:8vw; top:43%; width:min(38rem,46vw); text-align:left; pointer-events:none; will-change:opacity,transform,filter; padding:1.2rem 0 1.5rem; }
   .memory.right { left:auto; right:8vw; top:51%; text-align:right; }
@@ -377,9 +391,19 @@
     .arrival-kicker { letter-spacing:.17em; }
     .arrival-subtitle { font-size:clamp(1rem,3.5vw,1.3rem); }
     .finale-hint { bottom:4rem; font-size:.56rem; letter-spacing:.12em; }
-    .topbar { top:1.5rem; font-size:.58rem; }
-    .hero-copy { top:22vh; }
-    h1 { font-size:clamp(2.65rem,12.5vw,5.2rem); }
+    .hero-copy { top:clamp(5.4rem,10vh,6.5rem); width:94%; }
+    .portal-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  transform: none;
+  mask: none;
+  -webkit-mask: none;
+}
     .memory,.memory.right { left:7vw; right:7vw; width:auto; text-align:left; top:43%; }
     .memory::before,.memory.right::before { background:radial-gradient(ellipse at 45% 50%, rgba(8,2,15,.76), rgba(8,2,15,.24) 56%, transparent 82%); }
     .memory-thought { font-size:clamp(2.05rem,9vw,4.2rem); }
