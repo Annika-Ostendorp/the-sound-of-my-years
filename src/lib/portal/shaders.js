@@ -1,7 +1,9 @@
-// ORIGINAL Claude prototype shader, extracted verbatim from Liquid Glass Portal(2).html.
-// Keep unchanged until the visual comparison with the working HTML is complete.
+// Claude prototype shader with a controllable, very restrained idle-motion addition.
+// The original tunnel algorithm is preserved. The new movement only affects
+// the visible outer capsule while p is near zero; no 3D mesh is introduced.
+// Restore the original from prototypes/liquid-glass-original.html if needed.
 export const vertexShader = `varying vec2 v;void main(){v=uv;gl_Position=vec4(position.xy,0.,1.);}`;
-export const fragmentShader = `precision highp float;varying vec2 v;uniform sampler2D t1,t2;uniform float asp,p,time,a1,a2;
+export const fragmentShader = `precision highp float;varying vec2 v;uniform sampler2D t1,t2;uniform float asp,p,time,a1,a2,idleStrength,idleSpeed;
 const vec2 C=vec2(.494,.498);
 vec2 rot(vec2 q,float a){float c=cos(a),s=sin(a);return vec2(c*q.x-s*q.y,s*q.x+c*q.y);}
 vec3 lay(vec2 q,float sc,vec2 off,out float m){
@@ -10,7 +12,25 @@ vec3 lay(vec2 q,float sc,vec2 off,out float m){
  float d=length((u-.5)*vec2(a2,1.));
  m=smoothstep(.05,.36,d);
  return texture2D(t2,u).rgb;}
-vec3 pf(vec2 q0,float Z){vec2 sz1=vec2(.95*a1,.95);vec2 o=(.5-C)*sz1;vec2 u=C+(q0+o/Z)/(sz1*Z);return (u.x>0.&&u.x<1.&&u.y>0.&&u.y<1.)?texture2D(t1,u).rgb:vec3(0.);}
+vec3 pf(vec2 q0, float Z) {
+  vec2 sz1 = vec2(.95*a1, .95);
+  vec2 o = (.5-C)*sz1;
+  vec2 u = C+(q0+o/Z)/(sz1*Z);
+
+  vec2 safeUV = clamp(u, 0.0, 1.0);
+
+  vec3 tex = texture2D(t1, safeUV).rgb;
+
+  float edge =
+    smoothstep(0.0, .065, u.x) *
+    smoothstep(0.0, .065, 1.0-u.x) *
+    smoothstep(0.0, .065, u.y) *
+    smoothstep(0.0, .065, 1.0-u.y);
+
+  vec3 background = vec3(.004, .0015, .010);
+
+  return mix(background, tex, edge);
+} 
 void main(){
  vec2 q0=(v-.5)*vec2(asp,1.);
  float e=clamp(p/.36,0.,1.);float ee=e*e*e*(e*(e*6.-15.)+10.);
@@ -43,6 +63,25 @@ void main(){
  float len=length(q0);
  float Z=exp(ee*log(14.));
  vec2 qp=rot(q0,ee*ee*2.4*exp(-len*2.2));
+ // Subtle living-liquid distortion of the OUTER capsule, even at p=0.
+ // It fades out before the original tunnel takes over (p >= .22).
+ float idle=idleStrength*(1.-smoothstep(.015,.22,p));
+ float idleTime=time*idleSpeed;
+ float radius=max(length(qp),.0001);
+ float angle=atan(qp.y,qp.x);
+ float swirl=idle*(.024*sin(idleTime*.42+radius*9.)+.009*sin(5.*angle-idleTime*.23));
+ qp=rot(qp,swirl);
+ vec2 outward=qp/radius;
+ vec2 tangent=vec2(-outward.y,outward.x);
+ float surfaceFlow=sin(angle*5.+radius*13.-idleTime*.58);
+ float surfaceBreath=sin(angle*3.-radius*15.+idleTime*.43);
+qp+=idle*(tangent*.010*surfaceFlow+outward*.013*surfaceBreath);
+qp*=1.+idle*.012*sin(idleTime*.54);
+ // Initial cinematic framing without resizing the canvas
+float intro = 1.0 - smoothstep(.015, .225, p);
+
+qp = (qp + vec2(0.0, .10 * intro))
+     * (1.0 + .43 * intro);
  float bl=pk*.12+ee*.04,ca=pk*.03;
  vec3 pt=vec3(0.);
  for(int i=0;i<6;i++){float k=float(i)/5.;float zz=Z*(1.+bl*k);
