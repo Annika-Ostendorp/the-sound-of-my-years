@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/raye.schema.json",
+  "title": "TSMY – raye (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/provenance"
+    },
+    "sceneId": {
+      "const": "raye"
+    },
+    "artistId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+    },
+    "monthly": {
+      "type": "array",
+      "items": {
+        "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/monthMetric"
+      },
+      "minItems": 1
+    },
+    "artistCreditPolicy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "memoryIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+      },
+      "minItems": 0
+    },
+    "peak": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "month": {
+          "type": "string",
+          "pattern": "^20[0-9]{2}-(0[1-9]|1[0-2])$"
+        },
+        "sharePercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "denominator": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "month",
+        "sharePercent",
+        "denominator"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "artistId",
+    "monthly",
+    "artistCreditPolicy"
+  ]
+}

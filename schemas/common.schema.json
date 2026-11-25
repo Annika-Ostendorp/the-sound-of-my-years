@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/common.schema.json",
+  "title": "TSMY reusable public data types",
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "const": "Spotify Extended Streaming History"
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "format": "date"
+            },
+            "to": {
+              "type": "string",
+              "format": "date"
+            },
+            "timezone": {
+              "const": "Europe/Berlin"
+            },
+            "incompletePeriod": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "timezone",
+            "incompletePeriod"
+          ]
+        },
+        "generatedAtUTC": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "filterRulebook": {
+          "const": "music_only_rulebook.json"
+        },
+        "rulebookSHA256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "pipelineVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "measurement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "privacyReview": {
+          "enum": [
+            "pending",
+            "approved"
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "source",
+        "coverage",
+        "generatedAtUTC",
+        "filterRulebook",
+        "rulebookSHA256",
+        "pipelineVersion",
+        "measurement",
+        "privacyReview",
+        "limitations"
+      ]
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unit": {
+          "enum": [
+            "minutes",
+            "hours",
+            "plays",
+            "tracks",
+            "sessions",
+            "ratio",
+            "percent",
+            "days"
+          ]
+        },
+        "denominator": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "denominator"
+      ]
+    },
+    "artist": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minutes": {
+          "type": "number",
+          "minimum": 0
+        },
+        "plays": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "minutes",
+        "plays"
+      ]
+    },
+    "mediaRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+        },
+        "kind": {
+          "enum": [
+            "licensed_audio",
+            "generated_audio",
+            "spotify_external_link"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "rights": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publicationApproved": {
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "rights",
+        "publicationApproved"
+      ]
+    },
+    "monthMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "month": {
+          "type": "string",
+          "pattern": "^20[0-9]{2}-(0[1-9]|1[0-2])$"
+        },
+        "minutes": {
+          "type": "number",
+          "minimum": 0
+        },
+        "plays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverageDays": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "month",
+        "minutes",
+        "plays"
+      ]
+    },
+    "memoryLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "memoryId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+        },
+        "dataReference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "memoryId",
+        "dataReference"
+      ]
+    },
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artistId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+        },
+        "spotifyURI": {
+          "type": "string",
+          "pattern": "^spotify:track:"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "artistId"
+      ]
+    },
+    "memoryProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "const": "personal_recollection"
+        },
+        "privacyReview": {
+          "enum": [
+            "pending",
+            "approved"
+          ]
+        },
+        "reviewedAtUTC": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "context": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "privacyReview"
+      ]
+    },
+    "editorialProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "enum": [
+            "curated_assets",
+            "mixed_research"
+          ]
+        },
+        "privacyReview": {
+          "enum": [
+            "pending",
+            "approved"
+          ]
+        },
+        "reviewedAtUTC": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rightsStatement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "privacyReview",
+        "rightsStatement"
+      ]
+    }
+  }
+}

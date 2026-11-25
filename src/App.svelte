@@ -1,23 +1,29 @@
 <script>
-  import SiteHeader from './lib/components/SiteHeader.svelte';
-  import PortalJourney from './lib/components/PortalJourney.svelte';
-  import RhythmPreview from './lib/components/RhythmPreview.svelte';
-  import AboutProject from './lib/components/AboutProject.svelte';
+  import SiteHeader from "./lib/components/SiteHeader.svelte";
+  import PortalJourney from "./lib/components/PortalJourney.svelte";
+  import RhythmWorld from "./lib/components/RhythmWorld.svelte";
+  import AboutProject from "./lib/components/AboutProject.svelte";
+  import PillNavbar from './lib/components/PillNavbar.svelte';
+  import TimelinePath from './lib/components/TimelinePath.svelte';
+  import ZMemoryStack from './lib/components/activetheory/ZMemoryStack.svelte';
 </script>
 
 <svelte:head>
   <title>The Sound of My Years · An Immersive Music Time Capsule</title>
-  <meta name="description" content="An independent student project exploring personal Spotify listening history through memory, data and cinematic interaction." />
+  <meta
+    name="description"
+    content="An independent student project exploring personal Spotify listening history through memory, data and cinematic interaction."
+  />
 </svelte:head>
 
-<SiteHeader />
-<main>
-  <PortalJourney />
-  <RhythmPreview />
+<PillNavbar />
+<PortalJourney />
+<main id="data-journey" class="data-journey">
+  <TimelinePath />
+  <RhythmWorld />
+  <ZMemoryStack />
+  <!-- weitere Welten folgen später, jeweils mit ihrem festen ID-Anchor -->
   <AboutProject />
-  <footer class="site-footer">
-    <span>THE SOUND OF MY YEARS</span>
-    <span>AN INDEPENDENT STUDENT PROJECT · 2018—2026</span>
-    <a href="#top" aria-label="Back to the beginning">BACK TO THE CAPSULE ↑</a>
-  </footer>
 </main>
+
+<style>.data-journey { position: relative; isolation: isolate; background:#100B1E; }</style>

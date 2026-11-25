@@ -1,0 +1,239 @@
+{
+ "first": {
+  "track": "Light It Up (feat. Nyla & Fuse ODG) [Remix]",
+  "artist": "Major Lazer",
+  "album": "Peace Is The Mission : Extended",
+  "uri": "spotify:track:1pjvlYOMIg1NhGQbM6iwrY",
+  "cover": "https://i.scdn.co/image/ab67616d00001e02ed17a14e09145f2986a42726",
+  "date": "2018-02-09"
+ },
+ "song2022": {
+  "track": "Doin' Time",
+  "artist": "Lana Del Rey",
+  "album": "Norman Fucking Rockwell!",
+  "uri": "spotify:track:0Oqc0kKFsQ6MhFOLBNZIGX",
+  "cover": "https://i.scdn.co/image/ab67616d00001e02879e9318cb9f4e05ee552ac9",
+  "minutes": 367,
+  "year": 2022
+ },
+ "raye": {
+  "artist": "RAYE",
+  "image": "https://i.scdn.co/image/ab67616100005174d9b6eb671700503c0e6205a9",
+  "uri": "spotify:track:5CO4uJ11ZVKhsO2Lu9NUSk",
+  "first": {
+   "track": "Natalie Don't",
+   "artist": "RAYE",
+   "album": "Natalie Don’t",
+   "uri": "spotify:track:5CO4uJ11ZVKhsO2Lu9NUSk",
+   "cover": "https://i.scdn.co/image/ab67616d00001e023317e5ea09cba0db8752ac7a",
+   "date": "2021-06-06"
+  },
+  "hours": {
+   "2021": 0,
+   "2022": 0,
+   "2023": 1,
+   "2024": 20,
+   "2025": 30,
+   "2026": 123
+  },
+  "top": [
+   {
+    "track": "I Will Overcome.",
+    "artist": "RAYE",
+    "album": "THIS MUSIC MAY CONTAIN HOPE.",
+    "uri": "spotify:track:4VnLKvKQQcWnZagNedFSF9",
+    "cover": "https://i.scdn.co/image/ab67616d00001e0297c0928704e5a2bd8d4c5b90",
+    "minutes": 599
+   },
+   {
+    "track": "Black Mascara.",
+    "artist": "RAYE",
+    "album": "My 21st Century Blues",
+    "uri": "spotify:track:3yM4sIOrG4UOJve2fQU7Zc",
+    "cover": "https://i.scdn.co/image/ab67616d00001e0294e5237ce925531dbb38e75f",
+    "minutes": 471
+   },
+   {
+    "track": "Click Clack Symphony. (feat. Hans Zimmer)",
+    "artist": "RAYE",
+    "album": "Click Clack Symphony. (feat. Hans Zimmer)",
+    "uri": "spotify:track:5PspYmmQ8nKESNTcBY2LlX",
+    "cover": "https://i.scdn.co/image/ab67616d00001e02c35881d2aa600c3d1a08dfbb",
+    "minutes": 379
+   },
+   {
+    "track": "Escapism. - Sped Up",
+    "artist": "RAYE",
+    "album": "Escapism.",
+    "uri": "spotify:track:4rPJSqrov3zqGwXlemLBMw",
+    "cover": "https://i.scdn.co/image/ab67616d00001e0257dd31ec4e9dbc7f4238f69a",
+    "minutes": 344
+   },
+   {
+    "track": "Genesis.",
+    "artist": "RAYE",
+    "album": "Genesis.",
+    "uri": "spotify:track:2bMhQ5kJTFTKEKBFzkMBvN",
+    "cover": "https://i.scdn.co/image/ab67616d00001e02b21b78e708a0b8012745293d",
+    "minutes": 291
+   }
+  ]
+ },
+ "habit": {
+  "year": 2020,
+  "hours": 1041,
+  "days": 43,
+  "peakHour": 18,
+  "bars": [
+   0.233,
+   0.187,
+   0.175,
+   0.091,
+   0.077,
+   0.019,
+   0.013,
+   0.722,
+   0.386,
+   0.408,
+   0.473,
+   0.638,
+   0.503,
+   0.86,
+   0.365,
+   0.333,
+   0.409,
+   0.718,
+   1.0,
+   0.644,
+   0.565,
+   0.288,
+   0.429,
+   0.269
+  ]
+ },
+ "comebacks": [
+  {
+   "track": "Beggin (original version)",
+   "artist": "Madcon",
+   "album": "So Dark The Con Of Man",
+   "uri": "spotify:track:1XyL3J7eTTKnxRZAM3LqIT",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02197d278a26922f72a4d4b080",
+   "gapDays": 1408,
+   "from": "2021-12-22",
+   "to": "2025-10-31",
+   "playsBefore": 23,
+   "playsAfter": 5
+  },
+  {
+   "track": "Arms of Gold",
+   "artist": "Tape Machines",
+   "album": "Arms of Gold",
+   "uri": "spotify:track:0QIwoAemWa2xlBIhTBAVns",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02c2c16067e1564415a41ca9de",
+   "gapDays": 1181,
+   "from": "2022-03-18",
+   "to": "2025-06-12",
+   "playsBefore": 15,
+   "playsAfter": 6
+  },
+  {
+   "track": "I’m Tired (with Zendaya) - Bonus Track",
+   "artist": "Labrinth",
+   "album": "I’m Tired (with Zendaya) - Bonus Track",
+   "uri": "spotify:track:6LtHYDgYHRCHoKK3snfr2w",
+   "cover": "https://i.scdn.co/image/ab67616d00001e0285d5c1a4de606db358396759",
+   "gapDays": 1177,
+   "from": "2022-03-05",
+   "to": "2025-05-26",
+   "playsBefore": 11,
+   "playsAfter": 5
+  },
+  {
+   "track": "Le secret",
+   "artist": "Mathieu Lamboley",
+   "album": "Lupin (Music from Pt. 2 of the Netflix Original Series)",
+   "uri": "spotify:track:1yEPMwd5y36JpZcETVWVYI",
+   "cover": "https://i.scdn.co/image/ab67616d00001e028814fd5d7d9e7ccb4c8f08a3",
+   "gapDays": 1091,
+   "from": "2023-05-21",
+   "to": "2026-05-16",
+   "playsBefore": 7,
+   "playsAfter": 5
+  },
+  {
+   "track": "Who Is It",
+   "artist": "Michael Jackson",
+   "album": "Dangerous",
+   "uri": "spotify:track:4HWcWgleTuUAWnVPNwW4CM",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02bf4cf0f48b94d0c8297b751a",
+   "gapDays": 1037,
+   "from": "2023-06-22",
+   "to": "2026-04-24",
+   "playsBefore": 25,
+   "playsAfter": 11
+  },
+  {
+   "track": "Love Again",
+   "artist": "Dua Lipa",
+   "album": "Future Nostalgia",
+   "uri": "spotify:track:45BZcKdKl8OXpuGSlSvEun",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02bb1e7090e662ce98b0e1b4c0",
+   "gapDays": 1034,
+   "from": "2022-03-03",
+   "to": "2024-12-31",
+   "playsBefore": 6,
+   "playsAfter": 12
+  },
+  {
+   "track": "Mr. Blue Sky",
+   "artist": "Electric Light Orchestra",
+   "album": "Out of the Blue",
+   "uri": "spotify:track:2RlgNHKcydI9sayD2Df2xp",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02c18c4e6c2978fb6cbdef85e2",
+   "gapDays": 1027,
+   "from": "2022-08-01",
+   "to": "2025-05-24",
+   "playsBefore": 8,
+   "playsAfter": 7
+  },
+  {
+   "track": "Somebody",
+   "artist": "Dagny",
+   "album": "Strangers / Lovers",
+   "uri": "spotify:track:6hCGVqheUBzymvfA7IB4Y9",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02df44322bfb19d11f84000a9d",
+   "gapDays": 995,
+   "from": "2021-07-22",
+   "to": "2024-04-13",
+   "playsBefore": 11,
+   "playsAfter": 38
+  }
+ ],
+ "_loved_again": [
+  {
+   "track": "Somebody",
+   "artist": "Dagny",
+   "album": "Strangers / Lovers",
+   "uri": "spotify:track:6hCGVqheUBzymvfA7IB4Y9",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02df44322bfb19d11f84000a9d",
+   "gapDays": 995,
+   "from": "2021-07-22",
+   "to": "2024-04-13",
+   "playsBefore": 11,
+   "playsAfter": 38
+  },
+  {
+   "track": "Love Again",
+   "artist": "Dua Lipa",
+   "album": "Future Nostalgia",
+   "uri": "spotify:track:45BZcKdKl8OXpuGSlSvEun",
+   "cover": "https://i.scdn.co/image/ab67616d00001e02bb1e7090e662ce98b0e1b4c0",
+   "gapDays": 1034,
+   "from": "2022-03-03",
+   "to": "2024-12-31",
+   "playsBefore": 6,
+   "playsAfter": 12
+  }
+ ],
+ "_hours_day": null
+}

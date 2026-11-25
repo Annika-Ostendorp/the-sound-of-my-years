@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/manifest.schema.json",
+  "title": "TSMY released dataset manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "project": {
+      "const": "The Sound of My Years"
+    },
+    "generatedAtUTC": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timezone": {
+      "const": "Europe/Berlin"
+    },
+    "source": {
+      "const": "Spotify Extended Streaming History"
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "capsule",
+              "rhythm",
+              "gravity",
+              "eras",
+              "returning",
+              "raye",
+              "rabbit-hole",
+              "expectation"
+            ]
+          },
+          "number": {
+            "type": "string",
+            "pattern": "^0[1-8]$"
+          },
+          "anchor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dataFile": {
+            "type": "string",
+            "pattern": "^/data/[a-z0-9-]+\\.json$"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "preview",
+              "planned"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "anchor",
+          "status"
+        ]
+      },
+      "minItems": 8,
+      "maxItems": 8
+    },
+    "extraFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "memories",
+              "media",
+              "timeline"
+            ]
+          },
+          "dataFile": {
+            "type": "string",
+            "pattern": "^/data/[a-z0-9-]+\\.json$"
+          },
+          "status": {
+            "enum": [
+              "released",
+              "planned"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "project",
+    "generatedAtUTC",
+    "timezone",
+    "source",
+    "chapters",
+    "extraFiles"
+  ]
+}

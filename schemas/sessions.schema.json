@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/sessions.schema.json",
+  "title": "TSMY – sessions (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/provenance"
+    },
+    "sceneId": {
+      "const": "sessions"
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gapThresholdMinutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timestampField": {
+          "const": "ts"
+        },
+        "timestampSemantics": {
+          "const": "playback_end"
+        },
+        "durationField": {
+          "const": "ms_played"
+        },
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "gapThresholdMinutes",
+        "timestampField",
+        "timestampSemantics",
+        "durationField",
+        "policy"
+      ]
+    },
+    "distributions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "durationBins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "minMinutes": {
+                "type": "number",
+                "minimum": 0
+              },
+              "maxMinutes": {
+                "type": "number",
+                "minimum": 0
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "minMinutes",
+              "maxMinutes",
+              "count"
+            ]
+          },
+          "minItems": 0
+        },
+        "artistCountBins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "artistCount": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sessions": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "artistCount",
+              "sessions"
+            ]
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "durationBins",
+        "artistCountBins"
+      ]
+    },
+    "hourlySessionStarts": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "minItems": 24,
+      "maxItems": 24
+    },
+    "pathways": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "month": {
+            "type": "string",
+            "pattern": "^20[0-9]{2}-(0[1-9]|1[0-2])$"
+          },
+          "trackCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "distinctArtists": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "listeningMinutes": {
+            "type": "number",
+            "minimum": 0
+          },
+          "artistSequence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "month",
+          "trackCount",
+          "distinctArtists",
+          "listeningMinutes",
+          "artistSequence"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "method",
+    "distributions",
+    "hourlySessionStarts"
+  ]
+}

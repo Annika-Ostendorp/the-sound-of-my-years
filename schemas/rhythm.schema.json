@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/rhythm.schema.json",
+  "title": "TSMY – rhythm (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/provenance"
+    },
+    "sceneId": {
+      "const": "rhythm"
+    },
+    "year": {
+      "const": 2026
+    },
+    "metric": {
+      "const": "average recorded music listening minutes per local clock hour per calendar day"
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "ALL",
+              "MON",
+              "TUE",
+              "WED",
+              "THU",
+              "FRI",
+              "SAT",
+              "SUN"
+            ]
+          },
+          "calendarDays": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hours": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 24,
+            "maxItems": 24
+          },
+          "meanDailyMinutes": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "calendarDays",
+          "hours",
+          "meanDailyMinutes"
+        ]
+      },
+      "minItems": 8,
+      "maxItems": 8
+    },
+    "sessionBreakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gapMinutes": {
+          "type": "number",
+          "minimum": 1
+        },
+        "countsByHour": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 24,
+          "maxItems": 24
+        },
+        "minutesByHour": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minItems": 24,
+          "maxItems": 24
+        }
+      },
+      "required": [
+        "gapMinutes",
+        "countsByHour",
+        "minutesByHour"
+      ]
+    },
+    "hourlyTopTracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23
+          },
+          "track": {
+            "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/track"
+          },
+          "minutes": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "hour",
+          "track",
+          "minutes"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 24
+    },
+    "skipParadox": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceField": {
+          "enum": [
+            "skipped",
+            "reason_end",
+            "duration_threshold",
+            "combined"
+          ]
+        },
+        "minimumPlays": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "trackId": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+              },
+              "plays": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "skips": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "returnCount": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "skipRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "listeningMinutes": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "trackId",
+              "plays",
+              "skips",
+              "returnCount",
+              "skipRate",
+              "listeningMinutes"
+            ]
+          }
+        }
+      },
+      "required": [
+        "definition",
+        "sourceField",
+        "minimumPlays",
+        "limitations",
+        "tracks"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "year",
+    "metric",
+    "profiles"
+  ]
+}

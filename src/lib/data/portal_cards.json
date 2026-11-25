@@ -1,0 +1,12 @@
+{
+  "_readme": "Redaktionelle Karten im Portal. Die Zahlen/Songs kommen aus portal_data.json (erzeugt von scripts/export_portal_cards.py), hier stehen nur Jahr, Kategorie, Textzeile und Verweis. category: song | artist | habit | comeback. ref: first | song2022 | raye-first | raye-now | habit | comeback:<index> | loved:<index>. memoryId verweist auf memories.json.",
+  "cards": [
+    { "year": 2018, "category": "song",     "ref": "first",       "label": "FIRST STREAM", "marker": "Where the archive begins", "memoryId": null, "wave": 3 },
+    { "year": 2020, "category": "habit",    "ref": "habit",       "label": "A YEAR OF HEADPHONES", "marker": "Always one hour louder", "memoryId": null, "wave": 5 },
+    { "year": 2021, "category": "artist",   "ref": "raye-first",  "label": "SOMEONE NEW ARRIVES", "marker": "First RAYE stream · June 2021", "memoryId": "first-raye-stream", "wave": 17 },
+    { "year": 2022, "category": "song",     "ref": "song2022",    "label": "SONG OF THE YEAR", "marker": "Most minutes of 2022", "memoryId": null, "wave": 11 },
+    { "year": 2024, "category": "comeback", "ref": "loved:0",     "label": "A SONG CAME BACK", "marker": "Gone for years. Then on repeat.", "memoryId": null, "wave": 23 },
+    { "year": 2025, "category": "comeback", "ref": "comeback:0",  "label": "ABSENT, NOT GONE", "marker": "Back after almost four years", "memoryId": null, "wave": 29 },
+    { "year": 2026, "category": "artist",   "ref": "raye-now",    "label": "LIVE, IN THE ROOM", "marker": "Berlin Concert · Jan 2026", "memoryId": "berlin-concert-2026", "wave": 41 }
+  ]
+}

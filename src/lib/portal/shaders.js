@@ -92,3 +92,53 @@ qp = (qp + vec2(0.0, .10 * intro))
  col+=vec3(1.,.78,.55)*rv*(1.-rv)*1.3;
  col*=1.-pk*.35*smoothstep(.3,1.1,len);
  gl_FragColor=vec4(col,1.);}`;
+
+/* ------------------------------------------------------------------ *
+ * ZEITREISE-ERWEITERUNG (additiv). Der Tunnel-Shader oben ist unverändert.
+ * Reihenfolge pro Frame:
+ *   1. Tunnel-Shader -> RenderTarget        (unverändert)
+ *   2. Partikel (THREE.Points) -> RenderTarget (additiv)
+ *   3. Post-Pass: chromatische Aberration am Rand + Atem-Puls -> Canvas
+ * Bei velocity = 0 und breath = 0 ist der Post-Pass ein 1:1-Durchreicher.
+ * ------------------------------------------------------------------ */
+export const postVertexShader = `varying vec2 v;void main(){v=uv;gl_Position=vec4(position.xy,0.,1.);}`;
+export const postFragmentShader = `precision highp float;varying vec2 v;
+uniform sampler2D tex;uniform float chroma,breath,time;
+void main(){
+ vec2 c=v-.5;float r=length(c);
+ vec2 dir=r>1e-4?c/r:vec2(0.);
+ vec2 off=dir*chroma*r*r*2.;
+ vec3 col=vec3(texture2D(tex,v+off).r,texture2D(tex,v).g,texture2D(tex,v-off).b);
+ float pulse=.5+.5*sin(time*.9);
+ col*=1.+breath*(pulse-.5)*2.*(1.-smoothstep(.0,.9,r)*.35);
+ gl_FragColor=vec4(col,1.);}`;
+
+export const particleVertexShader = `
+attribute float aSize;attribute float aHue;
+uniform float uFlow,uDepth,uVel,uAlpha,uPx;
+varying float vAlpha;varying float vHue;varying vec2 vDir;
+void main(){
+ float ph=fract(position.z-uFlow);               // 0 = bei der Kamera, 1 = tief im Tunnel
+ vec3 pos=vec3(position.xy,-ph*uDepth);
+ vec4 mv=modelViewMatrix*vec4(pos,1.);
+ gl_Position=projectionMatrix*mv;
+ float dist=max(-mv.z,.5);
+ gl_PointSize=min(72.,aSize*uPx*(1.+uVel*2.2)*(14./dist));
+ vAlpha=uAlpha*smoothstep(.0,.07,ph)*(1.-smoothstep(.72,1.,ph))*(.35+.65*aSize/3.);
+ vHue=aHue;
+ vec2 d=gl_Position.xy;float l=length(d);
+ vDir=l>1e-4?d/l:vec2(1.,0.);vDir.y=-vDir.y;      // Bildschirm-Radialrichtung (gl_PointCoord ist y-gespiegelt)
+ vDir=normalize(vDir);
+}`;
+export const particleFragmentShader = `precision highp float;
+uniform float uVel;varying float vAlpha;varying float vHue;varying vec2 vDir;
+void main(){
+ vec2 c=gl_PointCoord-.5;
+ vec2 d=vec2(dot(c,vDir),dot(c,vec2(-vDir.y,vDir.x)));
+ d.x/=1.+uVel*3.6;                                // Streckung entlang des Tunnelflusses
+ float r=length(d)*2.;
+ float a=pow(smoothstep(1.,0.,r),1.7)*vAlpha;
+ if(a<.004)discard;
+ vec3 warm=vec3(1.,.72,.55),pink=vec3(.96,.38,.73),lav=vec3(.73,.62,.93);
+ vec3 col=vHue<.4?mix(warm,pink,vHue/.4):mix(pink,lav,(vHue-.4)/.6);
+ gl_FragColor=vec4(col,a);}`;

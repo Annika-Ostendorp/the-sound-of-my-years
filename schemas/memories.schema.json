@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/memories.schema.json",
+  "title": "TSMY – memories (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/memoryProvenance"
+    },
+    "sceneId": {
+      "const": "memories"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "heading": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relatedScene": {
+            "enum": [
+              "capsule",
+              "rhythm",
+              "gravity",
+              "eras",
+              "returning",
+              "raye",
+              "rabbit-hole",
+              "expectation"
+            ]
+          },
+          "dataReference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "const": "personal_recollection"
+          },
+          "consentToPublish": {
+            "const": true
+          },
+          "mediaAsset": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "heading",
+          "text",
+          "relatedScene",
+          "source",
+          "consentToPublish"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "entries"
+  ]
+}

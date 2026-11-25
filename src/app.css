@@ -5,6 +5,8 @@
   --font-family: 'Syne', sans-serif;
   --font-editorial: 'Instrument Serif', Georgia, serif;
   --font-body: 'DM Sans', sans-serif;
+  /* Persönliche Handschrift (Fatfish-Prinzip): Pfeil-Notizen, Randbemerkungen. */
+  --font-hand: 'Mansalva', 'Caveat', cursive;
   color: #f5ebf9;
   background-color: #05020a;
   font-synthesis: none;
@@ -55,4 +57,9 @@ html {
 
 .data-label {
   font-family: var(--font-body);
+}
+
+html { scroll-padding-top: 90px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

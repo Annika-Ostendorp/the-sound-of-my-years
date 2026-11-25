@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/timeline.schema.json",
+  "title": "TSMY – timeline (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/editorialProvenance"
+    },
+    "sceneId": {
+      "const": "timeline"
+    },
+    "stations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 2018,
+            "maximum": 2026
+          },
+          "chapterId": {
+            "enum": [
+              "capsule",
+              "rhythm",
+              "gravity",
+              "eras",
+              "returning",
+              "raye",
+              "rabbit-hole",
+              "expectation"
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artistId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "coverAsset": {
+            "type": "string",
+            "minLength": 1
+          },
+          "memoryId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          }
+        },
+        "required": [
+          "id",
+          "year",
+          "chapterId",
+          "caption"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "stations"
+  ]
+}

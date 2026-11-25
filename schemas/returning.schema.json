@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/returning.schema.json",
+  "title": "TSMY – returning (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/provenance"
+    },
+    "sceneId": {
+      "const": "returning"
+    },
+    "minimumGapDays": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "track": {
+            "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/track"
+          },
+          "firstPlayed": {
+            "type": "string",
+            "format": "date"
+          },
+          "lastBeforeReturn": {
+            "type": "string",
+            "format": "date"
+          },
+          "returnDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "gapDays": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "returnListeningMinutes": {
+            "type": "number",
+            "minimum": 0
+          },
+          "initialSparkMinutes": {
+            "type": "number",
+            "minimum": 0
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          }
+        },
+        "required": [
+          "track",
+          "firstPlayed",
+          "lastBeforeReturn",
+          "returnDate",
+          "gapDays",
+          "returnListeningMinutes"
+        ]
+      },
+      "minItems": 1
+    },
+    "reel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "trackId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "trackId",
+          "rank",
+          "reason"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "minimumGapDays",
+    "tracks"
+  ]
+}

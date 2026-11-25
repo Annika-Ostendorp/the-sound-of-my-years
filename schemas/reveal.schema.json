@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsmy.local/schemas/reveal.schema.json",
+  "title": "TSMY – reveal (public derived data)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "https://tsmy.local/schemas/common.schema.json#/$defs/provenance"
+    },
+    "sceneId": {
+      "const": "expectation"
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 1
+          },
+          "observed": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "supported",
+              "contradicted",
+              "inconclusive"
+            ]
+          },
+          "evidenceDataset": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{1,80}$"
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "question",
+          "expected",
+          "observed",
+          "outcome",
+          "evidenceDataset",
+          "limitations"
+        ]
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "closingQuestion": {
+      "const": "What if my music remembers more than I do?"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "sceneId",
+    "hypotheses",
+    "closingQuestion"
+  ]
+}
