@@ -8,7 +8,7 @@ The Sound of My Years is an interactive information-design project that explores
 
 The experience focuses on **2026**, with historical Spotify records from **2018-2026** providing context for changing listening habits, rediscovered songs, and a dedicated chapter about RAYE.
 
-> **Project status (21 November 2026):** Early Svelte implementation / working vertical slice. The scroll-driven Liquid Glass portal and its memory fragments are implemented. *The Rhythm of My Day* currently uses **synthetic, clearly labelled demonstration data**. The remaining data worlds and final Spotify data integration are in development. This is not yet a finished or deployed experience.
+> **Project status (25 November 2026):** Active Svelte 5 prototype on `feature/data-worlds`. The scroll-driven liquid-glass portal, editorial hero, navigation and first music world are implemented. *The Rhythm of My Day* includes a Waveform Clock, a memory-versus-data comparison and weekday fingerprints. These use **Spotify-derived preview aggregates marked `REVIEW_REQUIRED`**, pending data-validation and privacy review. Other worlds and public deployment are still in development.
 
 ## The idea: Liquid Memories
 
@@ -38,11 +38,11 @@ The aesthetic takes inspiration from cinematic digital experiences and expressiv
 - A **Svelte 5** single-page application built with **Vite**.
 - A full-screen **Three.js / GLSL** portal effect adapted from a working standalone HTML prototype developed with Claude.
 - Scroll progress controlled with **GSAP ScrollTrigger**, including four personal memory fragments timed to appear during the tunnel sequence.
-- A transition into a first radial **SVG** listening-clock prototype with weekday selection.
+- A scroll-driven transition into **World 01: The Rhythm of My Day**, featuring an interactive waveform listening clock with weekday and AM/PM selection, a memory-versus-data comparison and musical weekday fingerprints.
 - A static image fallback if WebGL is unavailable or the visitor requests reduced motion, plus a **Skip to the Data** link.
 - A preserved copy of the original HTML proof of concept for visual comparison.
 
-**Not yet implemented:** verified Spotify data binding for the radial clock, the remaining interactive chapters, production deployment, and full accessibility/performance testing.
+**Still pending:** validating the derived Spotify preview data and reconciling the documented filtering discrepancy, building the remaining interactive chapters, production deployment, imagery-rights review, and full accessibility/performance testing.
 
 ## Technology
 
@@ -55,7 +55,7 @@ The aesthetic takes inspiration from cinematic digital experiences and expressiv
 | Tailwind CSS v4 + custom CSS | Layout, design tokens and visual styling |
 | SVG | First radial chart prototype and future data visuals |
 | D3.js | Installed for upcoming data-driven interactive visualisations |
-| Python | Planned local Spotify preprocessing and generation of privacy-reviewed data aggregates |
+| Python | Local Spotify data aggregation scripts and review checks; release approval pending |
 
 ## Run locally
 
@@ -133,6 +133,12 @@ Run these checks after significant code changes. The build output in `dist/` is 
 
 The **original standalone portal** is retained under `prototypes/`; the same visual effect has been separated into image assets, shaders, and a Svelte component. The original shader code is deliberately preserved until visual parity has been checked.
 
+## Preview and project links
+
+- **Current source:** [feature/data-worlds](https://github.com/Annika-Ostendorp/the-sound-of-my-years/tree/feature/data-worlds)
+- **Live GitHub Pages preview:** not yet published. Add only after data, rights, privacy and build review.
+- **Screenshots:** selected screenshots of the implemented hero and first world will be added after visual review.
+
 ## Data ethics and privacy
 
 The final website uses **Spotify Extended Streaming History** as its sole published data source. Earlier research also explored YouTube and Google Search, but these are not part of the final website.
@@ -143,9 +149,9 @@ The final website uses **Spotify Extended Streaming History** as its sole publis
 - Recorded playback is evidence of **listening activity**, not proof of emotions, real-life events, or the first time I heard a song.
 - Missing periods and partial-year coverage must be made clear. A first **observed** play is not necessarily a first-ever listen.
 - The source material covers 2018-2026, but the semester project's main analytical focus is 2026.
-- The current demo clock uses **synthetic values**, not Spotify measurements.
+- The current Waveform Clock uses **Spotify-derived preview values, marked `REVIEW_REQUIRED`**. These must not be presented as final validated measurements.
 
-The imagery used in the portal also requires a rights review before any public release. The fact that the GitHub repository is private does not replace that review.
+The imagery used in the portal also requires a rights review before a public website release. The GitHub repository is already public, so code and existing assets must also be reviewed.
 
 ## Design process and documentation
 
@@ -168,8 +174,8 @@ Claude supported the standalone Three.js/GLSL portal prototype. ChatGPT supporte
 ## Next milestones
 
 1. **Portal polish:** compare the Svelte rendering with the original prototype, refine the scroll timings and typography of the memory fragments, and improve the transition into the first data world.
-2. **Verified listening clock:** replace the synthetic radial-chart values with locally calculated and checked Spotify aggregates.
-3. **Five interactive music worlds:** implement meaningful data encodings, interaction and scene-specific motion.
+2. **Verified listening clock:** reconcile the current Spotify-derived preview values, including the 4,182-record discrepancy noted in the preview metadata, before publishing results.
+3. **Interactive music worlds:** complete and verify the first world's interactions, then implement the remaining worlds with documented data encodings.
 4. **RAYE chapter and finale:** separate personal recollection from recorded evidence and evaluate the original hypotheses.
 5. **Final quality review:** responsiveness, contrast, reduced motion, keyboard interactions, performance, privacy and deployment.
 
