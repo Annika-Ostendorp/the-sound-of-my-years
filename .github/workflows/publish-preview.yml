@@ -1,0 +1,69 @@
+name: Publish The Sound of My Years preview
+
+# The workflow lives on main, but always builds the actual feature/data-worlds
+# source branch. Publication is intentionally manual during development.
+on:
+  workflow_dispatch:
+    inputs:
+      publish_confirmation:
+        description: "Type PUBLISH after privacy, data accuracy, image rights and accessibility review"
+        required: true
+        default: "NOT_REVIEWED"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages-preview
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ github.event.inputs.publish_confirmation == 'PUBLISH' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout the current working branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/data-worlds
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Svelte components
+        run: npm run check
+
+      - name: Block unreviewed Spotify preview data
+        run: |
+          if grep -R -F 'REVIEW_REQUIRED' src/lib/data --include='*.json'; then
+            echo "::error::Spotify preview aggregates still require review. Do not deploy."
+            exit 1
+          fi
+
+      - name: Build for GitHub project Pages
+        run: npm run build -- --base=/the-sound-of-my-years/
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
