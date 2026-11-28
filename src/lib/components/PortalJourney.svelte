@@ -88,8 +88,8 @@
 
         const loader = new THREE.TextureLoader();
         [texture1, texture2] = await Promise.all([
-          loader.loadAsync('/portal/capsule.jpg'),
-          loader.loadAsync('/portal/tunnel.jpg')
+          loader.loadAsync(`${import.meta.env.BASE_URL}portal/capsule.jpg`),
+          loader.loadAsync(`${import.meta.env.BASE_URL}portal/tunnel.jpg`)
         ]);
         if (disposed) { texture1.dispose(); texture2.dispose(); return; }
         for (const t of [texture1, texture2]) {
@@ -413,7 +413,7 @@
   <div class="portal-stage">
     <div bind:this={portalVisual} class="portal-visual">
       {#if fallback}
-        <img class="static-portal" src="/portal/capsule.jpg" alt="Iridescent violet, pink and gold liquid-glass portal" />
+        <img class="static-portal" src={`${import.meta.env.BASE_URL}portal/capsule.jpg`} alt="Iridescent violet, pink and gold liquid-glass portal" />
       {:else}
         <canvas bind:this={canvas} class="portal-canvas" aria-hidden="true"></canvas>
       {/if}
